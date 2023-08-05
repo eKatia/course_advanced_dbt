@@ -1,3 +1,9 @@
+{{
+  config(
+    materialized='table', tags = ['daily']
+
+  )
+}}
 WITH
 
 final AS (
@@ -16,4 +22,5 @@ final AS (
             ON s.subscription_plan_id = sp.subscription_plan_id
 )
 
-SELECT * FROM final
+SELECT *
+FROM final

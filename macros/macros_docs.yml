@@ -1,0 +1,13 @@
+macros:
+  - name: rolling_window_function
+    description: >-
+        This macro calculates a rolling window function, where a user needs to define:
+        - the aggregation type (e.g. SUM, AVG, MAX, etc). Default is AVG if not stated otherwise.
+        - partition_by
+        - order by
+        - the rolling window (default = 7)
+
+  - name: date_trunc_to
+    description: >-
+        This macro truncates the date (`column_name`) to the defined base (e.g. day, month, quarter etc).
+        If not trunc base provided - truncate to month.

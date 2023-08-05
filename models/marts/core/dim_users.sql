@@ -1,3 +1,10 @@
+{{
+  config(
+    materialized='table', tags = ['daily']
+
+  )
+}}
+
 WITH
 
 users AS (

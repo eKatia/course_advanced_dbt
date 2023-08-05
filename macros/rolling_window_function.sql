@@ -3,5 +3,5 @@
                 PARTITION BY {{ partition_by }}
                 ORDER BY {{ order_by }}
                 ROWS BETWEEN {{rolling_window_number}} PRECEDING AND CURRENT ROW
-            ) AS avg_{{rolling_window_number}}_periods_{{ column_name }}
+            ) AS avg_{{rolling_window_number}}_periods_{{ column_name }}_per_{{ partition_by }}
 {% endmacro %}
