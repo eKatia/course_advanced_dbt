@@ -5,7 +5,7 @@ sources:
     tables:
       - name: daily_ads
         identifier: ads
-        columns:
+
       - name: date
         description:  '{{ doc("bingeflix_ads_date") }}'
         tests:
