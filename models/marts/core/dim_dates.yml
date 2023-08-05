@@ -1,0 +1,24 @@
+models:
+  - name: dim_dates
+    description: Calendar model to use when datespining and adding date related columns
+    columns:
+      - name: calendar_date
+        description: 'It is a reference to a particular day represented within a calendar system'
+        tests:
+          - unique
+      - name: date_year
+        description: 'Year of the specified calendar date in the date format, e.g. for 2019-09-17 it will be 2019-01-01'
+      - name: date_month
+        description: 'Month of the specified calendar date in the date format, e.g. for 2019-09-17 it will be 2019-09-01'
+      - name: date_quarter
+        description: 'Quarter of the specified calendar date in the date format, e.g. for 2019-09-17 it will be 2019-07-01'
+      - name: date_week
+        description: 'Week of the specified calendar date in the date format, e.g. for 2019-09-17 it will be 2019-09-16'
+      - name: year_num
+        description: 'Year of the specified calendar date, e.g. for 2019-09-17 it will be 2019'
+      - name: month_num
+        description: 'Month of the specified calendar date, e.g. for 2019-09-17 it will be 9'
+      - name: quarter_num
+        description: 'Quarter of the specified calendar date, e.g. for 2019-09-17 it will be 3'
+      - name: day_of_month
+        description: 'Day of the specified calendar date, e.g. for 2019-09-17 it will be 17'
