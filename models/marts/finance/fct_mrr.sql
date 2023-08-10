@@ -1,4 +1,13 @@
 -- This model is created following the dbt MRR playbook: https://www.getdbt.com/blog/modeling-subscription-revenue/
+{{
+  config(
+    materialized='table', tags = ['daily']
+
+  )
+}}
+
+{% set dim_subscriptions = unit_testing_select_table(ref('dim_subscriptions'), ref('ut_mrr_dim_subscriptions_input')) %} -- This calls the macro we just wrote above, and returns our original source table, or our mock dataset, depending on the value of the unit_testing variable during dbt run
+{% set dim_dates = unit_testing_select_table(ref('dim_dates'), ref('ut_mrr_dim_dates_input')) %} -- This calls the macro we just wrote above, and returns our original source table, or our mock dataset, depending on the value of the unit_testing variable during dbt run
 
 WITH
 
@@ -15,7 +24,7 @@ monthly_subscriptions AS (
         {{ date_trunc_to('starts_at', 'month') }} AS start_month,
         {{ date_trunc_to('ends_at', 'month') }} AS end_month
     FROM
-        {{ ref('dim_subscriptions') }}
+         {{ dim_subscriptions }}
     WHERE
         billing_period = 'monthly'
 ),
@@ -25,7 +34,7 @@ months AS (
     SELECT
         calendar_date AS date_month
     FROM
-        {{ ref('dim_dates') }}
+       {{ dim_dates }}
     WHERE
         day_of_month = 1
 ),
@@ -158,9 +167,8 @@ mrr_with_changes AS (
             0.0
         ) AS previous_month_mrr_amount,
 
-        mrr - previous_month_mrr_amount AS mrr_change,
+        mrr - previous_month_mrr_amount AS mrr_change
 
-        {{ rolling_window_function('mrr', 'user_id', 'date_month', 'avg', 12) }}
     FROM
         unioned
 ),
@@ -178,7 +186,6 @@ final AS (
         mrr_change,
         LEAST(mrr, previous_month_mrr_amount) AS retained_mrr_amount,
         previous_month_mrr_amount,
-        avg_12_periods_mrr_per_user_id,
 
         CASE
             WHEN is_first_subscription_month THEN 'new'

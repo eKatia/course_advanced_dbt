@@ -6,6 +6,7 @@ models:
         description: 'It is a reference to a particular day represented within a calendar system'
         tests:
           - unique
+          - not_null
       - name: date_year
         description: 'Year of the specified calendar date in the date format, e.g. for 2019-09-17 it will be 2019-01-01'
       - name: date_month
